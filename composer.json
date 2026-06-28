@@ -1,5 +1,5 @@
 {
-    "name": "wirehttp/wirehttp",
+    "name": "innovatoranant/wirehttp",
     "description": "WireHTTP - A blazing-fast, zero-dependency, Fiber-driven PHP 8.2+ HTTP client. The next evolution beyond Guzzle.",
     "type": "library",
     "keywords": [
