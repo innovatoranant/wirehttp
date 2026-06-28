@@ -1,0 +1,16 @@
+/vendor/
+composer.phar
+.phpunit.cache
+.phpunit.result.cache
+
+# Development scratch files
+stress.php
+stress_features.php
+happy_path.php
+test.php
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+.DS_Store

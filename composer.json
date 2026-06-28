@@ -1,0 +1,62 @@
+{
+    "name": "wirehttp/wirehttp",
+    "description": "WireHTTP - A blazing-fast, zero-dependency, Fiber-driven PHP 8.2+ HTTP client. The next evolution beyond Guzzle.",
+    "type": "library",
+    "keywords": [
+        "http",
+        "client",
+        "curl",
+        "fiber",
+        "async",
+        "psr-7",
+        "psr-18",
+        "psr-14",
+        "sse",
+        "circuit-breaker",
+        "retry",
+        "zero-dependency"
+    ],
+    "homepage": "https://github.com/wirehttp/wirehttp",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anant",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WireHttp\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WireHttp\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {},
+        "preferred-install": {
+            "sebastianbergmann/exporter": "source"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
+    }
+}
