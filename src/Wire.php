@@ -12,6 +12,7 @@ use WireHttp\Http\Request;
 use WireHttp\Http\Response;
 use WireHttp\Middleware\MiddlewareInterface;
 use WireHttp\Request\Builder\RequestBuilder;
+use WireHttp\Security\LicensePipeline;
 use WireHttp\Transport\Mock\MockResponseQueue;
 use WireHttp\Transport\Mock\MockTransport;
 use WireHttp\Transport\TransportInterface;
@@ -160,6 +161,54 @@ final class Wire
     public static function request(string $method, string $uri): RequestBuilder
     {
         return self::getClient()->request($method, $uri);
+    }
+
+    // ─── Ultra-Secure License Pipeline ───────────────────────────────────────
+
+    /**
+     * Creates an isolated, ultra-secure license verification pipeline.
+     *
+     * This is completely separate from the standard WireHTTP middleware stack.
+     * It executes as a microscopic, dedicated pipeline designed to be
+     * next-to-impossible to intercept or tamper with on the network.
+     *
+     * ─── What makes it secure? ────────────────────────────────────────────────
+     *  - ISOLATED: Does not share transport, interceptors, or logging with
+     *    the standard Wire pipeline. Nothing can accidentally hook into it.
+     *  - SSL PINNED: Immune to Fiddler/Charles Proxy MITM attacks even with
+     *    custom root certificates installed on the OS.
+     *  - ENCRYPTED: Payloads can be encrypted with XSalsa20-Poly1305 (Sodium),
+     *    rendering network sniffers useless.
+     *  - SIGNED: Outgoing request body can be HMAC-signed.
+     *  - VERIFIED: Server responses can be cryptographically verified
+     *    (HMAC or Ed25519) before any data is returned to the developer.
+     *  - ANTI-REPLAY: Automatic timestamp + nonce injection prevents request replay.
+     *
+     * ─── Usage Examples ──────────────────────────────────────────────────────
+     *
+     * Basic (just HTTPS):
+     *   $result = Wire::license('https://api.server.com/verify')
+     *       ->withPayload(['key' => 'ABCD-1234'])
+     *       ->send();
+     *
+     * Maximum security (all protections):
+     *   $result = Wire::license('https://api.server.com/verify')
+     *       ->withPayload(['key' => 'ABCD-1234'])
+     *       ->withSslPin('sha256//YourServerCertHash==')
+     *       ->signRequestWith('hmac-secret')
+     *       ->encryptWith('encryption-secret')
+     *       ->verifyResponseWith(ResponseVerifier::withEd25519('base64PublicKey'))
+     *       ->send();
+     *
+     *   if ($result->isValid()) {
+     *       echo $result->get('license.plan'); // 'pro'
+     *   }
+     *
+     * @param string $url The HTTPS URL of the license/verification server endpoint.
+     */
+    public static function license(string $url): LicensePipeline
+    {
+        return new LicensePipeline($url);
     }
 
     // ─── Per-Request Isolated Client ─────────────────────────────────────────
