@@ -62,13 +62,13 @@ graph TD
     classDef target fill:#E53E3E,stroke:#C53030,stroke-width:2px,color:#fff,rx:10,ry:10;
 
     subgraph Application Space
-        A[Developer API<br/><code>Wire::get()</code>]:::facade
+        A["Developer API<br/><code>Wire::get()</code>"]:::facade
     end
 
     subgraph WireHTTP Pipeline
-        B[Middleware Stack<br/>(Rate Limit, Retry, Circuit Breaker)]:::middleware
-        C[Transport Layer<br/><code>ext-curl</code> / Fibers]:::network
-        D[Response Decorator<br/>JSON / XML / DTO Hydration]:::middleware
+        B["Middleware Stack<br/>(Rate Limit, Retry, Circuit Breaker)"]:::middleware
+        C["Transport Layer<br/><code>ext-curl</code> / Fibers"]:::network
+        D["Response Decorator<br/>JSON / XML / DTO Hydration"]:::middleware
     end
 
     subgraph External
